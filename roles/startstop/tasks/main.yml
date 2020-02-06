@@ -1,0 +1,4 @@
+---
+# file: roles/mackerel/tasks/main.yml
+#
+- include_tasks: install.yml

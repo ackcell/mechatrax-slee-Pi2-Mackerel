@@ -1,0 +1,21 @@
+---
+install_packages:
+  - sleepi2-firmware
+  - sleepi2-utils
+  - sleepi2-monitor
+  - jo
+  - jq
+  - ufw
+
+purge_packages:
+  - avahi-daemon
+  - gcc-4.9-base
+  - gcc-5-base
+  - gcc-6-base
+  - gcc-7-base
+  - freetype2-doc
+  - libraspberrypi-doc
+  - libboost-iostreams1.58.0
+  - libudev0
+  - libsigc++-1.2-5c2
+  - triggerhappy

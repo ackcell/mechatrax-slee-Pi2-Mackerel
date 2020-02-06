@@ -1,0 +1,36 @@
+---
+- name: remove packages
+  apt: name={{ item }} state=absent
+  with_items: 
+    - "{{ purge_packages }}"
+
+- name: install additional packages
+  apt: name={{ item }} state=latest
+  with_items:
+    - "{{ install_packages }}"
+
+- name: allow everything and enable ufw
+  ufw: state=enabled policy=allow
+
+- name: deny 3gpi interface
+  ufw: rule=deny direction=in interface={{ item }}
+  with_items:
+    - ppp0
+    - wwan0
+
+- name: purge unused packages
+  include_role:
+    name: common
+    tasks_from: autopurge
+
+- name: upgrade packages
+  apt: upgrade=dist
+
+- name: purge unused packages
+  include_role:
+    name: common
+    tasks_from: autopurge
+
+- name: copy config files
+  copy: src=./ dest=/ owner=root group=root mode=0644
+

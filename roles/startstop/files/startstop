@@ -1,0 +1,44 @@
+
+#!/bin/bash
+# slack-sleePi    notify boot up&shutdown to slack.
+#
+# Version:      @(#)slack-sleePi 1.00  23-Jan-2020  hayakawa@mechatrax.com
+#
+. /opt/mechatrax/etc/WEBHOOK
+case "$1" in
+  start)
+        MSG="`hostname` booting up :arrow_up: FLAG:`sleepi2ctl -g wakeup-flag` STATUS:`sleepi2ctl -g wakeup-status` DATE:`date`"
+        echo "Start"
+        JSON="{ \"text\": \"$MSG\" }"
+
+        RES=`curl -s -X POST -H 'Content-Type: application/json' -d "$JSON" $WEBHOOK_API_URL`
+
+        echo $RES
+        if [ -f /opt/mechatrax/etc/STARTUP.sh ]; then
+          bash /opt/mechatrax/etc/STARTUP.sh
+        fi
+        ;;
+  stop)
+        MSG="`hostname` shutting down :arrow_down: DATE:`date`"
+        echo "Stop"
+        JSON="{ \"text\": \"$MSG\" }"
+
+        RES=`curl -s -X POST -H 'Content-Type: application/json' -d "$JSON" $WEBHOOK_API_URL`
+
+        echo $RES
+        if [ -f /opt/mechatrax/etc/SHUTDOWN.sh ]; then
+          bash /opt/mechatrax/etc/SHUTDOWN.sh
+        fi
+        ;;
+  post)
+        MSG="`hostname` message:$@ DATE:`date`"
+        echo "Post"
+        JSON="{ \"text\": \"$MSG\" }"
+
+        RES=`curl -s -X POST -H 'Content-Type: application/json' -d "$JSON" $WEBHOOK_API_URL`
+
+        echo $RES
+        ;;
+  *)
+        echo $"Usage: $0 {start|stop|post} [post message]"
+esac

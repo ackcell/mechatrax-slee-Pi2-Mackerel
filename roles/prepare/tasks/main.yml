@@ -1,0 +1,21 @@
+---
+#- name: download mechatrax keyring
+#  get_url: url={{ mechatrax_archive_url }}/pool/main/m/mechatrax-archive-keyring/{{ mechatrax_archive_keyring_deb }}
+#           dest=/tmp/{{ mechatrax_archive_keyring_deb }}
+#           sha256sum={{ mechatrax_archive_keyring_sha256sum }}
+
+#- name: install mechatrax keyring
+#  apt: deb=/tmp/{{ mechatrax_archive_keyring_deb }}
+
+#- name: add mechatrax apt repository
+#  template: src=mechatrax.list
+#            dest=/etc/apt/sources.list.d/mechatrax.list
+#            owner=root
+#            group=root
+#            mode=0644
+
+- name: set hostname as in hosts inventory
+  hostname: name={{ hostname }}
+  when: hostname is defined
+- name: update caches
+  apt: update_cache=yes

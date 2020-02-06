@@ -1,0 +1,12 @@
+---
+- hosts: raspi
+  become: yes
+  roles:
+    - prepare
+    - 4gpi
+    - tweak
+  vars:
+    mechatrax_release: buster
+    mechatrax_archive_url: http://mechatrax.github.io/raspbian/
+    mechatrax_archive_keyring_deb: mechatrax-archive-keyring_2016.12.19.2_all.deb
+    mechatrax_archive_keyring_sha256sum: 3149c46ec82f3b1763537e4c6029923f849f4cd00a08e9b02255b05f4240fcfb

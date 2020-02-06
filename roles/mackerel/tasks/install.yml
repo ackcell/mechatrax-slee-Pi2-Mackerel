@@ -1,0 +1,83 @@
+
+## ensure installed mackerel is remove
+# stop service
+    - service:
+        name: mackerel-agent
+        state: stopped
+        enabled: no
+      ignore_errors: yes
+
+# rm files
+    - name: remove some conf files
+      file:
+        path: "{{ item }}"
+        state: absent
+      with_items:
+        - "/etc/mackerel-agent/mackerel-agent.conf"
+        - "/var/lib/mackerel-agent/id"
+
+    - name: install mackerel-agent(v0.66.0) for rasbperry pi
+      block:
+        - name: download tar and unarchive
+          unarchive:
+            src: https://github.com/mackerelio/mackerel-agent/releases/download/v0.66.0/mackerel-agent_linux_arm.tar.gz
+            dest: /var/tmp/
+            remote_src: yes
+        - name: make directories for mechatrax
+          file:
+            dest: '{{ item }}'
+            state: directory
+            owner: root
+            group: root
+            mode: 0755
+          loop:
+            - '/opt/mechatrax/sbin'
+            - '/opt/mechatrax/bin'
+            - '/opt/mechatrax/etc'
+            - '/etc/mackerel-agent'
+        - name: copy binary
+          copy:
+            src: /var/tmp/mackerel-agent_linux_arm/mackerel-agent
+            dest: /usr/local/sbin
+            remote_src: yes
+            owner: root
+            group: root
+            mode: 0744
+        - name: copy conf
+          copy:
+            src: /var/tmp/mackerel-agent_linux_arm/mackerel-agent.conf
+            dest:  /etc/mackerel-agent/mackerel-agent.conf
+            remote_src: yes
+            owner: root
+            group: root
+            mode: 0644
+        - name: init mackerel-agent
+          shell: mackerel-agent init -apikey={{apikeys}}
+        - name: regist systemd
+          copy:
+            src: systemd-mackerel-agent.service
+            dest: /lib/systemd/system/mackerel-agent.service
+            owner: root
+            group: root
+            mode: 0644
+        - name: apt install bc for mechatrax
+          apt:
+            name: bc
+        - name: copy mechatrax script for mackerel
+          copy:
+            src: customMetrix.sh
+            dest: /opt/mechatrax/sbin
+            mode: 0755
+            owner: root
+            group: root
+        - name: Ensure "command=mechatrax.sh is in section "[plugin.metrics.mechatrax]" in specified file
+          ini_file:
+            path: /etc/mackerel-agent/mackerel-agent.conf
+            section: plugin.metrics.mechatrax
+            option: command
+            value: '"/opt/mechatrax/sbin/customMetrix.sh"'
+        - name: start and enable mackerel-agent
+          service:
+            name: mackerel-agent
+            state: restarted
+            enabled: yes

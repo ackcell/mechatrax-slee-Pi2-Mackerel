@@ -1,0 +1,6 @@
+---
+# file: roles/mackerel/tasks/main.yml
+#
+- include_tasks: install.yml
+  when:
+    - (ansible_distribution == "Debian") and (ansible_architecture == "armv7l")

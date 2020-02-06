@@ -1,0 +1,77 @@
+---
+- name: configure keyboard
+  lineinfile: dest=/etc/default/keyboard
+              regexp={{ item.regexp }}
+              line={{ item.line }}
+              backup=yes
+  with_items:
+  - { regexp: '^XKBLAYOUT=', line: 'XKBLAYOUT="jp"' }
+
+- name: configure rng-tools
+  lineinfile: dest=/etc/default/rng-tools
+              regexp={{ item.regexp }}
+              insertafter={{ item.insertafter }}
+              line={{ item.line }}
+              backup=yes
+  with_items:
+  - { regexp: '^#HRNGDEVICE=/dev/hwrng', line: 'HRNGDEVICE=/dev/hwrng', insertafter: '^#HRNGDEVICE=' }
+
+- name: configure system.conf
+  lineinfile: dest=/etc/systemd/system.conf
+              regexp={{ item.regexp }}
+              insertafter={{ item.insertafter }}
+              line={{ item.line }}
+              backup=yes
+  with_items:
+  - { regexp: '^#RuntimeWatchdogSec=0', line: 'RuntimeWatchdogSec=10', insertafter: '\[Manager\]' }
+  - { regexp: '^#ShutdownWatchdogSec=10min', line: 'ShutdownWatchdogSec=10min', insertafter: '\[Manager\]' }
+
+- name: disable periodic apt
+  lineinfile: dest=/etc/apt/apt.conf.d/10periodic
+              regexp='^APT::Periodic::Enable '
+              line='APT::Periodic::Enable "0";'
+              backup=yes
+              create=yes
+
+- name: set timezone
+  command: timedatectl set-timezone Asia/Tokyo
+
+- name: update timezone
+  command: dpkg-reconfigure -f noninteractive tzdata
+
+- name: restart keyboard-setup service
+  service: name=keyboard-setup state=restarted
+
+- name: restart console-setup service
+  service: name=console-setup state=restarted
+
+- name: change wifi country
+  command: raspi-config nonint do_wifi_country JP
+
+- name: change boot behaviour
+  command: raspi-config nonint do_boot_behaviour B1
+
+- name: enable timesync service
+  command: timedatectl set-ntp true
+
+# reboot
+- name: Unconditionally reboot the machine with all defaults
+  reboot:
+
+# wait
+- name: Wait 600 seconds for target connection to become reachable/usable
+  wait_for_connection:
+
+# hwclock -w
+- name: write system clock into RTC
+  command: hwclock -w
+
+- name: disable timesync service
+  command: timedatectl set-ntp false
+
+- name: Unconditionally reboot the machine with all defaults
+  reboot:
+
+# wait
+- name: Wait 600 seconds for target connection to become reachable/usable
+  wait_for_connection:

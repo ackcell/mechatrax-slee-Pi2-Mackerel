@@ -1,0 +1,2 @@
+# STARTUP.sh will be invoked from startstop service
+(sleep 300&&(sleepi2alarm --set "+5min" && shutdown -h now))&

@@ -1,0 +1,12 @@
+---
+- hosts: raspi
+  become: yes
+  pre_tasks:
+    - name: setup for mechatrax
+      shell: "curl https://mechatrax.github.io/setup.sh | sudo bash"
+  roles:
+    - prepare
+    - sleepi2
+    - mackerel
+    - startstop
+    - tweak

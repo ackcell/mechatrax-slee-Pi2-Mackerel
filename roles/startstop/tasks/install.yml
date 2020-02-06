@@ -1,0 +1,54 @@
+        - name: install at
+          apt:
+            name: at
+            state: latest
+        - name: make directories for mechatrax
+          file:
+            dest: '{{ item }}'
+            state: directory
+            owner: root
+            group: root
+            mode: 0755
+          loop:
+            - '/opt/mechatrax/sbin'
+            - '/opt/mechatrax/bin'
+            - '/opt/mechatrax/etc'
+        - name: place webhook script
+          copy:
+            src: startstop
+            dest: /opt/mechatrax/bin
+            mode: 0755
+            owner: root
+            group: root
+        - name: place STARTUP.sh and SHUTDOWN.sh
+          copy:
+            src: '{{ item }}'
+            dest: /opt/mechatrax/etc
+            mode: 0755
+            owner: root
+            group: root
+          loop:
+            - 'STARTUP.sh'
+            - 'SHUTDOWN.sh'
+            - 'start_shutdown_in_5min_then_power_on_in_10min'
+            - 'start_online_on_bussiness_time'
+        - name: template key file
+          template:
+            src: WEBHOOK.j2
+            dest: /opt/mechatrax/etc/WEBHOOK
+            mode: 0755
+            owner: root
+            group: root
+        - name: place service file
+          copy:
+            src: startstop.service
+            dest: /lib/systemd/system
+            mode: 0755
+            owner: root
+            group: root
+        - name: enable startstop on systemd
+          systemd:
+            state: restarted
+            name: startstop
+            enabled: yes
+            daemon_reload: yes

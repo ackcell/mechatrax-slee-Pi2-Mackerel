@@ -1,0 +1,9 @@
+---
+- name: remove unused packages
+  apt: autoremove=yes
+- name: list removed packages
+  shell: dpkg -l | awk '/^rc/{ sub(":armhf", "", $2); print $2 }'
+  register: removed_packages
+- name: purge configurations
+  apt: name={{ item }} purge=yes state=absent
+  with_items: "{{ removed_packages.stdout_lines }}"

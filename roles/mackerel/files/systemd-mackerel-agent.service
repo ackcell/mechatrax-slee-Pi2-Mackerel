@@ -1,0 +1,14 @@
+[Unit]
+Description=mackerel-agent
+After=network.target network-online.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/sbin/mackerel-agent
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=control-group
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+Alias=mackerel-agent.service
