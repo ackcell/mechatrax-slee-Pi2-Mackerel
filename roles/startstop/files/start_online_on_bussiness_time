@@ -1,2 +1,2 @@
 # STARTUP.sh will be invoked from startstop service
-(echo "(sleepi2alarm --set \"9:00:00\"&&shutdown -h)"|at 17:00)
+(echo "(sleepi2alarm --set \"tomorrow 9:00:00\"&&shutdown -h)"|at 17:00)

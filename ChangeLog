@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### test Raspberry pi 4 model B
 ### Wi-Fi/4G signal strength in Mackerel Custom Metrics
 
+## [1.1.1] - 2020-02-06
+2020.02.06: edit sleepi2alarm argument of start_online_on_bussiness_time
 
 ## [1.1.0] - 2020-02-05
 2020.02.05: add start_online_on_bussiness_time
