@@ -99,6 +99,9 @@ ansible-play -i hosts sleepi2.yml
 
 [![asciicast](https://asciinema.org/a/UlZA0hYBKC9oKay9yzSfxY2ok.svg)](https://asciinema.org/a/UlZA0hYBKC9oKay9yzSfxY2ok)
 
+# Qiita
+[Raspberry piに電源管理/死活監視モジュール「slee-Pi」をつけてMackerelをインストールしたら、色々と捗る仕組みができた件](https://qiita.com/ackcell/items/ea71147b8603627ec5bf)
+
 # TODO
 ##   wifi/4Gカスタムメトリックス
 ##   Raspberry pi 4 model B
