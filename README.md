@@ -13,17 +13,18 @@
 のロールから構成しています。
 
 このplaybookをslee-Pi2を接続したRaspberry piに対して実行すると
-Raspberry piをカスタムメトリックスを含めMackerelで管理・モニターできるようになり、Slackに起動・停止の通知ができるようになります。
+Raspberry piをカスタムメトリックスを含めMackerelで管理・モニターできるようになり、Slack(Hangouts)に起動・停止の通知ができるようになります。
 
 予め以下のものが必要になります。
 
 - MackerelのアカウントとAPIKEY https://mackerel.io/ja/api-docs/
-- Slackのワークスペース・チャンネルとWEB_HOOK_URL https://slack.com/intl/ja-jp/help/articles/115005265063
+- Slackのワークスペース・チャンネルとWEB_HOOK_URL https://slack.com/intl/ja-jp/help/articles/115005265063 もしくは
+- HangoutのChat ROOMとWeb_HOOK_URL https://developers.google.com/hangouts/chat/how-tos/webhooks
 
 ## 条件
 ### ハード
-- Raspberry pi 3 model B+
-- slee-Pi2
+- Raspberry pi 3 model B+/4 model B
+- slee-Pi2/slee-Pi2Plus
 ### ソフトウェア
 - Rasbian buster lite 2019-09-26
 - ansible ver 2.7.7
@@ -59,8 +60,9 @@ https://api.slack.com/messaging/webhooks
 
 ![slack](img/slack.png)
 
+![Hangouts](img/Hangouts.png)
 
-また、slackへの通知は、/opt/mechatrax/bin/startstopにbashスクリプトで書かれていますので、メッセージの変更などは、playbookでインストール後に変更してください。
+また、slack(Hangouts)への通知は、/opt/mechatrax/bin/startstopにbashスクリプトで書かれていますので、メッセージの変更などは、playbookでインストール後に変更してください。
 
 このstartstopスクリプトはslackへの投稿後、boot時は/opt/mechatrax/STARTUP.shをbashスクリプトとして実行します。起動直後に何か処理を行いたい場合、STARTUP.shに記述しておくことで、様々な機能を簡単に実行することができます。例えば同じディレクトリにあるstart_shutdonw_in_5min_then_power_on_in_10minをSTARTUP.shにリネイムしておくと、次の再起動後、そのraspberry piは"起動-5分-停止-5分-再起動"を繰り返すようになります。
 
@@ -104,4 +106,4 @@ ansible-play -i hosts sleepi2.yml
 
 # TODO
 ##   wifi/4Gカスタムメトリックス
-##   Raspberry pi 4 model B
+##   DONE:Raspberry pi 4 model B
