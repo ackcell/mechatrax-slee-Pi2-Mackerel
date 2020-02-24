@@ -1,10 +1,15 @@
 ---
 - hosts: raspi
   become: yes
+  pre_tasks:
+    - name: setup for mechatrax
+      shell: "curl https://mechatrax.github.io/setup.sh | sudo bash"
   roles:
-    - prepare
-    - 4gpi
-    - tweak
+#    - prepare
+#    - 4gpi
+    - mackerel
+#    - startstop
+#    - tweak
   vars:
     mechatrax_release: buster
     mechatrax_archive_url: http://mechatrax.github.io/raspbian/

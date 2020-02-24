@@ -65,17 +65,17 @@
             name: bc
         - name: copy mechatrax script for mackerel
           copy:
-            src: customMetrix.sh
+            src: customMechatrax.sh
             dest: /opt/mechatrax/sbin
             mode: 0755
             owner: root
             group: root
-        - name: Ensure "command=mechatrax.sh is in section "[plugin.metrics.mechatrax]" in specified file
+        - name: Ensure "command=customMechatrax.sh is in section "[plugin.metrics.rapberry]" in specified file
           ini_file:
             path: /etc/mackerel-agent/mackerel-agent.conf
-            section: plugin.metrics.mechatrax
+            section: plugin.metrics.raspberry
             option: command
-            value: '"/opt/mechatrax/sbin/customMetrix.sh"'
+            value: '"/opt/mechatrax/sbin/customMechatrax.sh"'
         - name: start and enable mackerel-agent
           service:
             name: mackerel-agent

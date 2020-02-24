@@ -1,18 +1,23 @@
 # sleepi2
-[メカトラックス](https://mechatrax.com "メカトラックス") のラズベリーパイ向け周辺機器[slee-Pi2](https://mechatrax.com/products/slee-pi/ "slee-Pi2")を使用・評価するための環境を構築するansibleのplaybook です。
+[メカトラックス](https://mechatrax.com "メカトラックス") のラズベリーパイ向け周辺機器
+
+[slee-Pi2](https://mechatrax.com/products/slee-pi/ "slee-Pi2")
+及び
+[4GPi](https://mechatrax.com/products/4gpi/)を使用・評価するための環境を構築するansibleのplaybook です。
 
 ## 概略
-このplaybookでは、slee-Pi2を接続したRaspberry piにslee-Pi2の動作ツールをインストールし、Mackerelを使ったデバイス・モニタリングを行うRaspberry piを構築します。
+このplaybookでは、slee-Pi2/4GPiを接続したRaspberry piにslee-Pi2/4GPiの動作ツールをインストールし、Mackerelを使ったデバイス・モニタリングを行うRaspberry piを構築します。
 
 このplaybookは
 
 - sleepi2: slee-Pi2を稼働するためのツール類をインストール
-- mackerel: slee-Pi2が稼働するRaspberry piにMackerel agentをインストール
+- 4gpi: 4GPiを稼働するためのツール類をインストール
+- mackerel: slee-Pi2/4GPiが稼働するRaspberry piにMackerel agentをインストール
 - startstop: Raspberry piのboot/shutdown時の処理を実現するsystemdのstartstop.serviceをインストールします
 
 のロールから構成しています。
 
-このplaybookをslee-Pi2を接続したRaspberry piに対して実行すると
+このplaybookをslee-Pi2/4GPiを接続したRaspberry piに対して実行すると
 Raspberry piをカスタムメトリックスを含めMackerelで管理・モニターできるようになり、Slack(Hangouts)に起動・停止の通知ができるようになります。
 
 予め以下のものが必要になります。
@@ -25,6 +30,7 @@ Raspberry piをカスタムメトリックスを含めMackerelで管理・モニ
 ### ハード
 - Raspberry pi 3 model B+/4 model B
 - slee-Pi2/slee-Pi2Plus
+- 4GPi
 ### ソフトウェア
 - Rasbian buster lite 2019-09-26
 - ansible ver 2.7.7
@@ -36,10 +42,36 @@ Raspberry piをカスタムメトリックスを含めMackerelで管理・モニ
 
 https://github.com/mechatrax/slee-pi2 に従ったセットアップを行います
 
+### 4GPi
+
+https://github.com/mechatrax/4gpi/wiki/%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2 に従ったセットアップを行います
+
 ### mackerel
 
 https://mackerel.io mackerel-agentのmackerel-agent(v0.66.0) arm版をインストールします。
-通常のシステム・メトリックスに加えて、CPU温度とslee-Pi2のVOLTAGE(電源電圧)を投稿します。
+通常のシステム・メトリックスに加えて、CPU温度とslee-Pi2のVOLTAGE(電源電圧)をカスタム・メトリックスとして投稿します。
+また、WiFi/4GPiの電波強度を投稿します。
+
+
+
+
+
+4GPiの4G電波強度はcustom.4GPi.(s/n,rsrq,rsrp,rssi)にプロットされ
+
+
+
+Slee-Pi2のVoltageはcustom.slee-i.voltageに
+
+また、Raspberry pi本体のCPU温度とWiFi電波強度はcustom.raspberry.(cpu_temp,WiFi_LinkQuality,WiFi_SignalLevel)にプロットされます。
+
+Mackerelのグラフではマイナスの値を描画できないので、一部の値をグラフで見えるように、+150して描画しています。custom.mechatrax.tweak
+
+これらのカスタム・メトリックスは/opt/machatrax/sbin/customMechatrax.shで実装していますので、必要に応じて修正してください。
+
+![customMetrics](img/mackerel-4GPi-tweak.png)
+
+![customMetrics](img/mackerel-raspberry-sleepi.png)
+
 これらの投稿のため、agentインストール時にMackerelのapikeyが必要になり、inventoryに指定します。
 
 ![mackerel](img/mackerel.png)
@@ -98,12 +130,11 @@ web_hook_url=https://hooks.slack.com/services/xxxxxxxxx/xxxxxxxxx/xxxxxxxxxxxxxx
 ```
 ansible-play -i hosts sleepi2.yml
 ```
+```
+ansible-play -i hosts 4gpi.yml
+```
 
 [![asciicast](https://asciinema.org/a/UlZA0hYBKC9oKay9yzSfxY2ok.svg)](https://asciinema.org/a/UlZA0hYBKC9oKay9yzSfxY2ok)
 
 # Qiita
 [Raspberry piに電源管理/死活監視モジュール「slee-Pi」をつけてMackerelをインストールしたら、色々と捗る仕組みができた件](https://qiita.com/ackcell/items/ea71147b8603627ec5bf)
-
-# TODO
-##   wifi/4Gカスタムメトリックス
-##   DONE:Raspberry pi 4 model B

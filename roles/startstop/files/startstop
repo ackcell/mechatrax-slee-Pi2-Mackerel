@@ -7,7 +7,12 @@
 . /opt/mechatrax/etc/WEBHOOK
 case "$1" in
   start)
-        MSG="`hostname` booting up :arrow_up: FLAG:`sleepi2ctl -g wakeup-flag` STATUS:`sleepi2ctl -g wakeup-status` DATE:`date`"
+        which sleepi2ctl>/dev/null
+        if [ $? = 0 ]; then
+          MSG="`hostname` booting up :arrow_up: FLAG:`sleepi2ctl -g wakeup-flag` STATUS:`sleepi2ctl -g wakeup-status` DATE:`date`"
+        else
+          MSG="`hostname` booting up :arrow_up: FLAG:`non sleepi2ctl` DATE:`date`""
+        fi
         echo "Start"
         JSON="{ \"text\": \"$MSG\" }"
 
