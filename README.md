@@ -60,7 +60,7 @@ https://mackerel.io mackerel-agentのmackerel-agent(v0.66.0) arm版をインス�
 
 
 
-Slee-Pi2のVoltageはcustom.slee-i.voltageに
+Slee-Pi2のVoltageはcustom.slee-pi.voltageに
 
 また、Raspberry pi本体のCPU温度とWiFi電波強度はcustom.raspberry.(cpu_temp,WiFi_LinkQuality,WiFi_SignalLevel)にプロットされます。
 
@@ -74,7 +74,6 @@ Mackerelのグラフではマイナスの値を描画できないので、一部
 
 これらの投稿のため、agentインストール時にMackerelのapikeyが必要になり、inventoryに指定します。
 
-![mackerel](img/mackerel.png)
 
 ### startstop
 
