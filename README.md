@@ -1,8 +1,7 @@
 # sleepi2
 [メカトラックス](https://mechatrax.com "メカトラックス") のラズベリーパイ向け周辺機器
 
-[slee-Pi2](https://mechatrax.com/products/slee-pi/ "slee-Pi2")
-及び
+[slee-Pi2](https://mechatrax.com/products/slee-pi/ "slee-Pi2") 及び
 [4GPi](https://mechatrax.com/products/4gpi/)を使用・評価するための環境を構築するansibleのplaybook です。
 
 ## 概略
@@ -57,8 +56,6 @@ https://mackerel.io mackerel-agentのmackerel-agent(v0.66.0) arm版をインス�
 
 
 4GPiの4G電波強度はcustom.4GPi.(s/n,rsrq,rsrp,rssi)にプロットされ
-
-
 
 Slee-Pi2のVoltageはcustom.slee-pi.voltageに
 
@@ -121,6 +118,7 @@ ansible_ssh_user=pi # 認証情報を指定します
 ansible_ssh_pass=raspberry # 認証情報を指定します
 apikeys=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  # MackerelのAPIKEYを指定
 web_hook_url=https://hooks.slack.com/services/xxxxxxxxx/xxxxxxxxx/xxxxxxxxxxxxxxxxxxxxxxxx # slackのweb hook urlを指定
+nmopt="ipv4.route-metric 100" # NetworkManager option
 ```
 
 ## Quick Start
@@ -137,3 +135,5 @@ ansible-play -i hosts 4gpi.yml
 
 # Qiita
 [Raspberry piに電源管理/死活監視モジュール「slee-Pi」をつけてMackerelをインストールしたら、色々と捗る仕組みができた件](https://qiita.com/ackcell/items/ea71147b8603627ec5bf)
+
+[4GPiでもMackerelでモニタしてみる](https://qiita.com/ackcell/items/baaa2eb5eaba63849451)
