@@ -1,7 +1,7 @@
 ---
 - name: remove packages
   apt: name={{ item }} state=absent
-  with_items: 
+  with_items:
     - "{{ purge_packages }}"
 
 - name: install additional packages
@@ -34,3 +34,6 @@
 - name: copy config files
   copy: src=./ dest=/ owner=root group=root mode=0644
 
+- name: nmcli for SORACOM
+  shell: 'nmcli con add type gsm ifname "*" con-name gsm-4gpi-soracom apn soracom.io user sora password sora {{ nmopt }}'
+  when: nmopt is defined

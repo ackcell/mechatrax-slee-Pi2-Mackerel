@@ -5,8 +5,8 @@
     - name: setup for mechatrax
       shell: "curl https://mechatrax.github.io/setup.sh | sudo bash"
   roles:
-    - prepare
+#    - prepare
     - sleepi2
-    - mackerel
-    - startstop
-    - tweak
+#    - mackerel
+#    - startstop
+#    - tweak

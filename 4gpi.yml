@@ -6,10 +6,10 @@
       shell: "curl https://mechatrax.github.io/setup.sh | sudo bash"
   roles:
 #    - prepare
+#    - mackerel
+    - startstop
 #    - 4gpi
-    - mackerel
-#    - startstop
-#    - tweak
+    - tweak
   vars:
     mechatrax_release: buster
     mechatrax_archive_url: http://mechatrax.github.io/raspbian/

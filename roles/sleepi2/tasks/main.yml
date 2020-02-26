@@ -31,6 +31,31 @@
     name: common
     tasks_from: autopurge
 
+- name: enable timesync service
+  command: timedatectl set-ntp true
+
+# reboot
+- name: Unconditionally reboot the machine with all defaults
+  reboot:
+
+# wait
+- name: Wait 600 seconds for target connection to become reachable/usable
+  wait_for_connection:
+
+# hwclock -w
+- name: write system clock into RTC
+  command: hwclock -w
+
+- name: disable timesync service
+  command: timedatectl set-ntp false
+
+- name: Unconditionally reboot the machine with all defaults
+  reboot:
+
+# wait
+- name: Wait 600 seconds for target connection to become reachable/usable
+  wait_for_connection:
+
 # TODO:個別コピー？
 #- name: copy config files
 #  copy: src=./ dest=/ owner=root group=root mode=0644

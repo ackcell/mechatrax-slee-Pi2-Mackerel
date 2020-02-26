@@ -11,7 +11,7 @@ case "$1" in
         if [ $? = 0 ]; then
           MSG="`hostname` booting up :arrow_up: FLAG:`sleepi2ctl -g wakeup-flag` STATUS:`sleepi2ctl -g wakeup-status` DATE:`date`"
         else
-          MSG="`hostname` booting up :arrow_up: FLAG:`non sleepi2ctl` DATE:`date`""
+          MSG="`hostname` booting up :arrow_up: FLAG:non sleepi2ctl DATE:`date`"
         fi
         echo "Start"
         JSON="{ \"text\": \"$MSG\" }"

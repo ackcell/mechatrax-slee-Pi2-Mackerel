@@ -17,5 +17,3 @@
 - name: set hostname as in hosts inventory
   hostname: name={{ hostname }}
   when: hostname is defined
-- name: update caches
-  apt: update_cache=yes

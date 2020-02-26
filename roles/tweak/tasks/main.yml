@@ -50,28 +50,3 @@
 
 - name: change boot behaviour
   command: raspi-config nonint do_boot_behaviour B1
-
-- name: enable timesync service
-  command: timedatectl set-ntp true
-
-# reboot
-- name: Unconditionally reboot the machine with all defaults
-  reboot:
-
-# wait
-- name: Wait 600 seconds for target connection to become reachable/usable
-  wait_for_connection:
-
-# hwclock -w
-- name: write system clock into RTC
-  command: hwclock -w
-
-- name: disable timesync service
-  command: timedatectl set-ntp false
-
-- name: Unconditionally reboot the machine with all defaults
-  reboot:
-
-# wait
-- name: Wait 600 seconds for target connection to become reachable/usable
-  wait_for_connection:
