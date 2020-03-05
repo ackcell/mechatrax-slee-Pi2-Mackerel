@@ -19,7 +19,7 @@ fi
 # 4GPi
 which mmcli >/dev/null
 if [ $? = 0 ]; then
-  INDEX="0" # modem index
+  INDEX=`mmcli -L|grep SIM7600|awk -F'[/]' '{print $6}'|awk '{print $1}'` # modem index
 # genarate custom metrics 4GPi
   OUTPUT=`mmcli -m ${INDEX} --signal-get`
 # rssi,rsrq,rsrp,s/n
