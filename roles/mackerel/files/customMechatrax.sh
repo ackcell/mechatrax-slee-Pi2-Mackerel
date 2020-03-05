@@ -67,7 +67,7 @@ if [ -z "$SL" ]; then
   # 空
   :
 else
-  NAME='mechatrax.tweak.WiFi_SignalLevel'
+  NAME="mechatrax.tweak.WiFi_SignalLevel ${ADJUST}"
   VALUE=`echo "scale=3;${SL} ${ADJUST}" |bc`
   echo -e "${NAME}\t${VALUE}\t${SECONDS}"
 fi
@@ -76,7 +76,7 @@ if [ -z "$RSSI" ]; then
   # 空
   :
 else
-  NAME='mechatrax.tweak.RSSI'
+  NAME="mechatrax.tweak.RSSI ${ADJUST}"
   VALUE=`echo "scale=3;${RSSI} ${ADJUST}" |bc`
   echo -e "${NAME}\t${VALUE}\t${SECONDS}"
 fi
@@ -85,7 +85,7 @@ if [ -z "$RSRQ" ]; then
   # 空
   :
 else
-  NAME='mechatrax.tweak.RSRQ'
+  NAME="mechatrax.tweak.RSRQ ${ADJUST}"
   VALUE=`echo "scale=3;${RSRQ} ${ADJUST}" |bc`
   echo -e "${NAME}\t${VALUE}\t${SECONDS}"
 fi
@@ -94,7 +94,7 @@ if [ -z "$RSRP" ]; then
   # 空
   :
 else
-  NAME='mechatrax.tweak.RSRP'
+  NAME="mechatrax.tweak.RSRP ${ADJUST}"
   VALUE=`echo "scale=3;${RSRP} ${ADJUST}" |bc`
   echo -e "${NAME}\t${VALUE}\t${SECONDS}"
 fi

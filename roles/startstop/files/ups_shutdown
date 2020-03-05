@@ -1,0 +1,5 @@
+# this scrip should be invoked by sleepi2monitor, when sleepi2 Plus works as an ups
+/opt/mechatrax/bin/startstop post "shutting down by POWER OFF:Vol.=`sleepi2ctl -g voltage` mV"
+sleepi2ctl -s extin-trigger 1
+sleepi2ctl -s wakeup-delay 0
+shutdown -h now

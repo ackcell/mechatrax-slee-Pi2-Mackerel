@@ -137,3 +137,5 @@ ansible-play -i hosts 4gpi.yml
 [Raspberry piに電源管理/死活監視モジュール「slee-Pi」をつけてMackerelをインストールしたら、色々と捗る仕組みができた件](https://qiita.com/ackcell/items/ea71147b8603627ec5bf)
 
 [4GPiでもMackerelでモニタしてみる](https://qiita.com/ackcell/items/baaa2eb5eaba63849451)
+
+[slee-Pi2 PlusでRaspberry piの電源が落ちた際の復旧を自動化（キャパシタ編）](https://qiita.com/ackcell/items/cd9668e33a380ae8f964)

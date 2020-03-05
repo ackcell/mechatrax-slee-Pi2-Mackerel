@@ -32,6 +32,7 @@
             - 'SHUTDOWN.sh'
             - 'start_shutdown_in_5min_then_power_on_in_10min'
             - 'start_online_on_bussiness_time'
+            - 'ups_shutdown'
         - name: template key file
           template:
             src: WEBHOOK.j2
