@@ -5,10 +5,10 @@
     - name: setup for mechatrax
       shell: "curl https://mechatrax.github.io/setup.sh | sudo bash"
   roles:
-#    - prepare
-#    - mackerel
+    - prepare
+    - mackerel
     - startstop
-#    - 4gpi
+    - 4gpi
     - tweak
   vars:
     mechatrax_release: buster

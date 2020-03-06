@@ -46,8 +46,8 @@
 - name: write system clock into RTC
   command: hwclock -w
 
-- name: disable timesync service
-  command: timedatectl set-ntp false
+#- name: disable timesync service
+#  command: timedatectl set-ntp false
 
 - name: Unconditionally reboot the machine with all defaults
   reboot:

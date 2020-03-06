@@ -37,3 +37,7 @@
 - name: nmcli for SORACOM
   shell: 'nmcli con add type gsm ifname "*" con-name gsm-4gpi-soracom apn soracom.io user sora password sora {{ nmopt }}'
   when: nmopt is defined
+
+- name: nmcli for SORACOM
+  shell: 'nmcli con add type gsm ifname "*" con-name gsm-4gpi-soracom apn soracom.io user sora password sora'
+  when: nmopt is undefined
